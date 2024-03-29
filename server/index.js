@@ -59,6 +59,7 @@ app.get("/todos/:id", async (req, res) => {
 // update all todo
 app.put("/todos/:id", async (req, res) => {
   try {
+    // destructure params and ID
     const { id } = req.params;
     const { description } = req.body;
     // update a todo
