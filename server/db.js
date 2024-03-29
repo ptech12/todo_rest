@@ -13,19 +13,29 @@ const pool = new Pool({
   database: process.env.PSQL_DB,
 });
 
-// get ALL TODOS
+/**
+ * get ALL TODOS
+ * @returns rows from database
+ */
 export async function getAllTodos() {
+  
   const result = await pool.query("SELECT * FROM todo");
 
   return result.rows;
 }
 
-// get  TODOS by ID
+/**
+ * get  TODOS by ID
+ * @param  id 
+ * @returns row from database
+ */
 export async function getTodoById(id) {
   const result = await pool.query("SELECT * FROM todo WHERE todo_id = $1 ", [
     id,
   ]);
+
   // logic for empty rows
+
   if (result.rows.length === 0) {
     return "Nothing Found"
   } else {
@@ -33,7 +43,11 @@ export async function getTodoById(id) {
   }
 }
 
-// create a new todo
+/**
+ * create a new todo
+ * @param description - todo description
+ * @returns rows from database 
+ */
 export async function createTodo(description) {
   const result = await pool.query(
     "INSERT INTO todo (description) VALUES ($1) RETURNING *",
@@ -43,7 +57,12 @@ export async function createTodo(description) {
   return result.rows[0];
 }
 
-// update todo
+/**
+ * update todo
+ * @param id - todo id
+ * @param  description 
+ * @returns string
+ */
 export async function updateTodo(id, description) {
   const result = await pool.query(
     "UPDATE todo SET description = $1 WHERE todo_id = $2",
@@ -54,7 +73,11 @@ export async function updateTodo(id, description) {
 }
 
 
-// delete TODO by ID
+/**
+ *  delete TODO by ID
+ * @param id 
+ * @returns string
+ */
 export async function deleteTodo(id) {
   const result = await pool.query("DELETE FROM todo WHERE todo_id = $1", [id]);
 
