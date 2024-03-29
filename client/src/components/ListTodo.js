@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import EditTodo from "./EditTodo";
 
 const ListTodo = () => {
   const [todos, setTodos] = useState([]);
@@ -27,7 +28,7 @@ const ListTodo = () => {
 
         // using filter so that refresh not required
         setTodos(todos.filter(todo => todo.todo_id !== id));
-        
+
     } catch (err) {
         console.error(err.message);
     }
@@ -53,7 +54,9 @@ const ListTodo = () => {
           {todos.map((todo) => (
             <tr key={todo.todo_id}>
                 <td>{todo.description}</td>
-                <td>Edit</td>
+                <td>
+                    <EditTodo todo={todo}/>
+                </td>
                 <td>
                     <button className="btn btn-danger" onClick={()=>deleteTodo(todo.todo_id)}>
                         Delete
