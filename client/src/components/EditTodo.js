@@ -1,8 +1,26 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 const EditTodo = ({ todo }) => {
+  const [description, setDescription] = useState(todo.description);
 
-    const [description, setDescription] = useState(todo.description);
+  // eidt description function
+  const updateDescription = async (e) => {
+    e.preventDefault();
+
+    try {
+      // payload
+      const body = { description };
+
+      const response = await fetch(`http://localhost:8080/todos/${todo.todo_id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      window.location = "/";
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
   return (
     <>
       <button
@@ -14,27 +32,43 @@ const EditTodo = ({ todo }) => {
         Edit
       </button>
 
-      <div className="modal" id={`id${todo.todo_id}`}>
+      <div className="modal" id={`id${todo.todo_id}`} onClick={() => setDescription(todo.description)}>
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
               <h4 className="modal-title">Modal Heading</h4>
-              <button type="button" className="close" data-dismiss="modal">
+              <button type="button" className="close" data-dismiss="modal" 
+              onClick={() => setDescription(todo.description)}>
                 &times;
               </button>
             </div>
 
             <div className="modal-body">
-                <input type="text" name="editTodo" id="edit"
+              <input
+                type="text"
+                name="editTodo"
+                id="edit"
                 className="form-control"
-                value={description} />
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
             </div>
 
             <div className="modal-footer">
-              <button type="button" className="btn btn-warning" data-dismiss="modal">
+              <button
+                type="button"
+                className="btn btn-warning"
+                data-dismiss="modal"
+                onClick={(e) => updateDescription(e)}
+              >
                 Edit
               </button>
-              <button type="button" className="btn btn-danger" data-dismiss="modal">
+              <button
+                type="button"
+                className="btn btn-danger"
+                data-dismiss="modal"
+                onClick={() => setDescription(todo.description)}
+              >
                 Close
               </button>
             </div>
