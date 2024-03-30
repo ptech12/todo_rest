@@ -1,9 +1,9 @@
-import express from "express";
-import cors from "cors";
-import { getAllTodos, createTodo, updateTodo, deleteTodo, getTodoById } from "./db.js";
-import dotenv from "dotenv";
+const express = require('express')
+const cors = require('cors')
+const { getAllTodos, createTodo, updateTodo, deleteTodo, getTodoById }  = require('./db')
 
-dotenv.config();
+
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -95,3 +95,7 @@ app.delete("/todos/:id", async (req, res) => {
 app.listen(PORT, () => {
   console.log("Server running on PORT=" + PORT);
 });
+
+module.exports = {
+  app
+}

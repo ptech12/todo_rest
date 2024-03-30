@@ -1,9 +1,7 @@
 // configuration file
-import pkg from "pg";
-const { Pool } = pkg;
-import dotenv from "dotenv";
+const { Pool } = require('pg')
+require('dotenv').config();
 
-dotenv.config();
 
 const pool = new Pool({
   user: process.env.PSQL_USER,
@@ -17,7 +15,7 @@ const pool = new Pool({
  * get ALL TODOS
  * @returns rows from database
  */
-export async function getAllTodos() {
+ async function getAllTodos() {
   
   const result = await pool.query("SELECT * FROM todo");
 
@@ -29,7 +27,7 @@ export async function getAllTodos() {
  * @param  id 
  * @returns row from database
  */
-export async function getTodoById(id) {
+ async function getTodoById(id) {
   const result = await pool.query("SELECT * FROM todo WHERE todo_id = $1 ", [
     id,
   ]);
@@ -48,7 +46,7 @@ export async function getTodoById(id) {
  * @param description - todo description
  * @returns rows from database 
  */
-export async function createTodo(description) {
+ async function createTodo(description) {
   const result = await pool.query(
     "INSERT INTO todo (description) VALUES ($1) RETURNING *",
     [description]
@@ -63,7 +61,7 @@ export async function createTodo(description) {
  * @param  description 
  * @returns string
  */
-export async function updateTodo(id, description) {
+ async function updateTodo(id, description) {
   const result = await pool.query(
     "UPDATE todo SET description = $1 WHERE todo_id = $2",
     [description, id]
@@ -78,8 +76,16 @@ export async function updateTodo(id, description) {
  * @param id 
  * @returns string
  */
-export async function deleteTodo(id) {
+ async function deleteTodo(id) {
   const result = await pool.query("DELETE FROM todo WHERE todo_id = $1", [id]);
 
   return JSON.stringify(`todo_id=${id} deleted succeesfully`);
+}
+
+module.exports = {
+  getAllTodos,
+  getTodoById,
+  createTodo,
+  deleteTodo,
+  updateTodo
 }
