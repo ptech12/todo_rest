@@ -6,8 +6,10 @@
 ## setup Database
 
 ####  Initialize Postgres Database
-- Run the code from **database.sql** in psql server
+- Run the code from **server/database.sql** in psql server
 - Make sure the database name and table matches
+
+## Rename **.demo.env file** to **.env**
 
 #### Update .env file
 ```bash
@@ -16,7 +18,7 @@ PSQL_PASS=
 ```
 - Update username and password in **.demo.env** file
 
-- Rename **.demo.env file** to **.env**
+
 
 <hr />
 
@@ -59,4 +61,12 @@ In order test the API routes, we use mocha and chai
 Install testing library as follows
 ```bash
 $ npm install mocha chai@4.2.0 chai-http
+```
+
+After installation make sure UPDATE todo_id and description that is matches from the DATABASE
+
+Run the following to test the **RESTful API** routes
+
+```bash
+$ npm test
 ```
