@@ -53,3 +53,10 @@ $ npm i && npm start
 ```
 
 
+## Testing
+In order test the API routes, we use mocha and chai
+
+Install testing library as follows
+```bash
+$ npm install mocha chai@4.2.0 chai-http
+```

@@ -108,7 +108,7 @@ app.delete("/todos/:id", async (req, res) => {
       res.status(404).send("The task with the provided ID does not exists");
     }
 
-    
+
     const msgDelete = await deleteTodo(id);
 
     res.send(msgDelete);
@@ -117,10 +117,8 @@ app.delete("/todos/:id", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+
+
+module.exports = app.listen(PORT, () => {
   console.log("Server running on PORT=" + PORT);
 });
-
-module.exports = {
-  app,
-};
