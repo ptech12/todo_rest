@@ -17,7 +17,7 @@ const pool = new Pool({
  */
  async function getAllTodos() {
   
-  const result = await pool.query("SELECT * FROM todo");
+  const result = await pool.query("SELECT * FROM todo ORDER BY todo_id");
 
   return result.rows;
 }
@@ -37,7 +37,7 @@ const pool = new Pool({
   if (result.rowCount === 0) {
     return false
   } else {
-    return result.rows;
+    return result.rows[0];
   }
 }
 
@@ -63,11 +63,11 @@ const pool = new Pool({
  */
  async function updateTodo(id, description) {
   const result = await pool.query(
-    "UPDATE todo SET description = $1 WHERE todo_id = $2",
+    "UPDATE todo SET description = $1 WHERE todo_id = $2 RETURNING *",
     [description, id]
   );
 
-  return JSON.stringify(`Todo ID=${id} was updated successfully`);
+  return result.rows[0];
 }
 
 
