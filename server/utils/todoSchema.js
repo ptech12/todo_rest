@@ -1,8 +1,8 @@
 const Joi = require('joi');
 
 
-const todoSchema = {
-    description: Joi.string.required()
-}
+const todoSchema = Joi.object({
+    description: Joi.string().min(3).required()
+})
 
-exports.validateTask = (todo) => Joi.validate(todo, todoSchema);
+exports.validateTask = (todo) => todoSchema.validate(todo)

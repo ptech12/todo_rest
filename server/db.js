@@ -34,8 +34,8 @@ const pool = new Pool({
 
   // logic for empty rows
 
-  if (result.rows.length === 0) {
-    return "Nothing Found"
+  if (result.rowCount === 0) {
+    return false
   } else {
     return result.rows;
   }
@@ -67,7 +67,7 @@ const pool = new Pool({
     [description, id]
   );
 
-  return JSON.stringify("Todo was updated");
+  return JSON.stringify(`Todo ID=${id} was updated successfully`);
 }
 
 
