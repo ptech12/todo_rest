@@ -79,7 +79,7 @@ const pool = new Pool({
  async function deleteTodo(id) {
   const result = await pool.query("DELETE FROM todo WHERE todo_id = $1", [id]);
 
-  return JSON.stringify(`todo_id=${id} deleted succeesfully`);
+  return `todo_id=${id} deleted succeesfully`;
 }
 
 module.exports = {
